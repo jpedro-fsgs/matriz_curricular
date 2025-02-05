@@ -10,8 +10,6 @@ class Disciplina:
 
     def add_pre_requisito(self, disciplina):
         self.pre_requisitos.append(disciplina)
-
-    def add_requisito_para(self, disciplina):
         disciplina.requisito_para.append(self)
 
     def is_disponivel(self):
@@ -24,8 +22,12 @@ class Disciplina:
         self.completada = True
 
     def __str__(self):
-        string = f"{self.id}: {self.nome} - {'✓' if self.completada else 'X'}\n"
-        return string
+        result = f"## {self.id}: {self.nome} - {'✓' if self.completada else 'X'}\n"
+        if self.pre_requisitos:
+            result += f"\n### Pré-Requisitos:\n" + '\n'.join([f"- {requisito.nome}" for requisito in self.pre_requisitos])
+        if self.requisito_para:
+            result += f"\n### Requisito para:\n" + '\n'.join([f"- {requisito.nome}" for requisito in self.requisito_para])
+        return result + '\n'
 
 
 class Matriz:
@@ -39,7 +41,6 @@ class Matriz:
             disciplina = disciplinas[disciplina_json["id"]]
             for pre_requisito in disciplina_json["pre_requisitos"]:
                 disciplina.add_pre_requisito(disciplinas[pre_requisito])
-                disciplinas[pre_requisito].add_requisito_para(disciplina)
 
 
         self.disciplinas = disciplinas
@@ -68,8 +69,8 @@ with open('matriz.json', 'r') as file:
 
 matriz = Matriz(data)
 
-for id in [3, 4, 5, 7, 14, 18, 20, 10, 15, 22, 6]:
+for id in [3, 4, 5, 7, 14, 18, 20, 10, 15]:
     matriz.set_completado(id)
 
-for i in matriz.disponiveis():
-    print(i)
+with open('output.md', 'w') as file:
+    file.write(str(matriz))
