@@ -7,6 +7,7 @@ class Disciplina:
         self.completada = False;
         self.pre_requisitos = []
         self.requisito_para = []
+        self.importancia = 0
 
     def add_pre_requisito(self, disciplina):
         self.pre_requisitos.append(disciplina)
@@ -22,7 +23,7 @@ class Disciplina:
         self.completada = True
 
     def __str__(self):
-        result = f"## {self.id}: {self.nome} - {'✓' if self.completada else 'X'}\n"
+        result = f"## {self.id}: {self.nome} - {'✔️' if self.completada else '❌'}\n"
         if self.pre_requisitos:
             result += f"\n### Pré-Requisitos:\n" + '\n'.join([f"- {requisito.nome}" for requisito in self.pre_requisitos])
         if self.requisito_para:
@@ -57,20 +58,45 @@ class Matriz:
     
     def completadas(self):
         return [disciplina for disciplina in self.disciplinas.values() if disciplina.completada]
-
+    
     def disponiveis(self):
-        lista_disponiveis = [disciplina for disciplina in self.disciplinas.values() if disciplina.is_disponivel()]
-        print(f"{len(lista_disponiveis)} disciplinas disponíveis.")
-        return lista_disponiveis
+        return [disciplina for disciplina in self.disciplinas.values() if disciplina.is_disponivel()]
+
+    def disponiveis_str(self):
+        lista_disponiveis = [f"- {disciplina.nome}{f" (Bloqueia {disciplina.importancia} disciplinas)" if disciplina.importancia else ""}" for disciplina in sorted(self.disponiveis(), key=lambda i : i.importancia, reverse=True)]
+        return f"### {len(lista_disponiveis)} disciplinas disponíveis.\n" + '\n'.join(lista_disponiveis)
+    
+    def checar_importancia(self):
+        for disciplina in self.disciplinas.values():
+            dfs(disciplina)
+
+def dfs(disciplina: Disciplina):
+    if disciplina.completada:
+        return 0
+    disciplina.importancia = len(disciplina.requisito_para)
+    for i in disciplina.requisito_para:
+        disciplina.importancia += dfs(i)
+    
+    return disciplina.importancia
+
+def gerar_matriz(disciplinas_cursadas):
+
+    with open('matriz.json', 'r') as file:
+        data = json.load(file)
+
+    matriz = Matriz(data)
 
 
-with open('matriz.json', 'r') as file:
-    data = json.load(file)
+    for id in disciplinas_cursadas:
+        matriz.set_completado(id)
 
-matriz = Matriz(data)
+    matriz.checar_importancia()
 
-for id in [3, 4, 5, 7, 14, 18, 20, 10, 15]:
-    matriz.set_completado(id)
+    output = f"# Disciplinas Disponíveis\n" + matriz.disponiveis_str() + f"\n---\n# Grade\n" + str(matriz)
 
-with open('output.md', 'w') as file:
-    file.write(str(matriz))
+    with open('output.md', 'w') as file:
+        file.write(output)
+
+
+disciplinas_cursadas = [3, 4, 5, 7, 14, 18, 20, 10, 15]
+gerar_matriz(disciplinas_cursadas)
