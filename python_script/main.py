@@ -66,6 +66,13 @@ class Matriz:
         lista_disponiveis = [f"- {disciplina.nome}{f" (Bloqueia {disciplina.importancia} disciplinas)" if disciplina.importancia else ""}" for disciplina in sorted(self.disponiveis(), key=lambda i : i.importancia, reverse=True)]
         return f"### {len(lista_disponiveis)} disciplinas disponíveis.\n" + '\n'.join(lista_disponiveis)
     
+    def bloqueadas(self):
+        return [disciplina for disciplina in self.disciplinas.values() if not disciplina.is_disponivel() and not disciplina.completada]
+
+    def bloqueadas_str(self):
+        lista_bloqueadas = [f"- {disciplina.nome}" for disciplina in self.bloqueadas()]
+        return f"### {len(lista_bloqueadas)} disciplinas bloqueadas.\n" + '\n'.join(lista_bloqueadas)
+    
     def checar_importancia(self):
         for disciplina in self.disciplinas.values():
             dfs(disciplina)
@@ -92,7 +99,9 @@ def gerar_matriz(disciplinas_cursadas):
 
     matriz.checar_importancia()
 
-    output = f"# Disciplinas Disponíveis\n" + matriz.disponiveis_str() + f"\n---\n# Grade\n" + str(matriz)
+    output = matriz.disponiveis_str() + "\n"
+    output += matriz.bloqueadas_str()
+    output += f"\n---\n# Grade\n" + str(matriz)
 
     with open('output.md', 'w') as file:
         file.write(output)
