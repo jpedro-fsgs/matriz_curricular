@@ -1,11 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Disciplina, DisciplinaJson } from "@/types/DisciplinaType";
 
 type MatrizContextType = {
     curso: string;
     matriz: Disciplina[];
+    completadasCount: number;
     definirMatriz: (nomeCurso: string, matrizJson: DisciplinaJson[]) => void;
     toggleCompletada: (id: number) => void;
 };
@@ -16,6 +17,13 @@ const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
     const [curso, setCurso] = useState<string>("");
+    const [completadasCount, setCompletadasCount] = useState(0);
+
+    useEffect(() => {
+        setCompletadasCount(matriz.reduce((count, disciplina) => {
+            return count + (disciplina.completada ? 1 : 0);
+        }, 0));
+    }, [matriz]);
 
     function definirMatriz(nomeCurso: string, matrizJson: DisciplinaJson[]) {
         setCurso(nomeCurso);
@@ -105,7 +113,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <MatrizContext.Provider
-            value={{ curso, matriz, definirMatriz, toggleCompletada }}
+            value={{ curso, matriz, completadasCount, definirMatriz, toggleCompletada }}
         >
             {children}
         </MatrizContext.Provider>

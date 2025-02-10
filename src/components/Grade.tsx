@@ -6,15 +6,16 @@ import DisciplinaCard from "./DisciplinaCard";
 import { useMatriz } from "@/context/MatrizContext";
 
 function Grade() {
-    const { matriz, curso, definirMatriz, toggleCompletada } = useMatriz();
+    const { matriz, curso, completadasCount, definirMatriz, toggleCompletada } = useMatriz();
 
     useEffect(() => {
         definirMatriz("Sistemas de Informação", matrizJson);
+        // eslint-disable-next-line
     }, []);
 
     return (
         <div className="mx-auto w-full p-8">
-            <h1 className="text-4xl">{curso}</h1>
+            <h1 className="text-4xl text-center mt-8 mb-16">{curso} ({completadasCount}/{matriz.length})</h1>
             <div className="flex flex-wrap gap-5 justify-center">
                 {matriz.map((disciplina) => (
                     <DisciplinaCard

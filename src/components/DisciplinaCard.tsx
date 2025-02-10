@@ -22,6 +22,7 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
             onClick={onClick}
             className={cn(
                 "w-96 h-96",
+                { "cursor-pointer hover:scale-[1.025]": disciplina.disponivel },
                 { "opacity-50": !disciplina.disponivel },
                 { "border-green-600": disciplina.completada }
             )}
@@ -46,7 +47,8 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
             <CardContent className="space-y-4">
                 {!disciplina.completada && disciplina.importancia > 0 && (
                     <p className="text-destructive font-semibold">
-                        Bloqueia {disciplina.importancia} disciplinas
+                        Bloqueia {disciplina.importancia} disciplina
+                        {disciplina.importancia > 1 && "s"}
                     </p>
                 )}
 
@@ -59,13 +61,15 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
                                     key={`pr-${disciplina.id}-${preRequisito.id}`}
                                     className="ml-4 space-x-1"
                                 >
-                                    <span className="flex items-center gap-1"><p>{preRequisito.nome}</p>
-                                    {preRequisito.completada && (
-                                        <CheckCircle2
-                                            color="green"
-                                            size="16"
-                                        />
-                                    )}</span>
+                                    <span className="flex items-center gap-1">
+                                        <p>{preRequisito.nome}</p>
+                                        {preRequisito.completada && (
+                                            <CheckCircle2
+                                                color="green"
+                                                size="16"
+                                            />
+                                        )}
+                                    </span>
                                 </li>
                             ))}
                         </ul>
@@ -80,14 +84,16 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
                                     key={`rq-${disciplina.id}${para.id}`}
                                     className="ml-4 space-x-1"
                                 >
-                                    <span className="flex items-center gap-1" ><p className="inline">{para.nome}</p>
-                                    {para.completada && (
-                                        <CheckCircle2
-                                            className="inline"
-                                            color="green"
-                                            size="16"
-                                        />
-                                    )}</span>
+                                    <span className="flex items-center gap-1">
+                                        <p className="inline">{para.nome}</p>
+                                        {para.completada && (
+                                            <CheckCircle2
+                                                className="inline"
+                                                color="green"
+                                                size="16"
+                                            />
+                                        )}
+                                    </span>
                                 </li>
                             ))}
                         </ul>
