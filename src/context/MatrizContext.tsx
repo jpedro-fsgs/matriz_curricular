@@ -13,16 +13,17 @@ type MatrizContextType = {
 
 const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
-
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
     const [curso, setCurso] = useState<string>("");
     const [completadasCount, setCompletadasCount] = useState(0);
 
     useEffect(() => {
-        setCompletadasCount(matriz.reduce((count, disciplina) => {
-            return count + (disciplina.completada ? 1 : 0);
-        }, 0));
+        setCompletadasCount(
+            matriz.reduce((count, disciplina) => {
+                return count + (disciplina.completada ? 1 : 0);
+            }, 0)
+        );
     }, [matriz]);
 
     function definirMatriz(nomeCurso: string, matrizJson: DisciplinaJson[]) {
@@ -51,7 +52,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         setMatriz(newMatriz);
     }
 
-    function atualizarRequisitos(matriz: Disciplina[]){
+    function atualizarRequisitos(matriz: Disciplina[]) {
         matriz.forEach((disciplina) => {
             disciplina.preRequisitos.length = 0;
             disciplina.requisitoPara.length = 0;
@@ -68,12 +69,12 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
             const visited = new Set<number>();
             stack.push(disciplina);
 
-            while(stack.length > 0){
+            while (stack.length > 0) {
                 const current = stack.pop()!;
                 visited.add(current.id);
-                current.requisitoPara.forEach(reqPara => stack.push(reqPara))
+                current.requisitoPara.forEach((reqPara) => stack.push(reqPara));
             }
-            disciplina.importancia = visited.size -1;
+            disciplina.importancia = visited.size - 1;
         });
     }
 
@@ -91,20 +92,24 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         }
 
         setMatriz((matriz) => {
-            const newMatriz = matriz.map(disciplina => ({...disciplina}));
+            const newMatriz = matriz.map((disciplina: Disciplina) => ({
+                ...disciplina,
+            }));
             newMatriz[id].completada = !newMatriz[id].completada;
-            
-            //Seta todos as disciplinas dependentes como falso 
-            if(newMatriz[id].completada == false){
+
+            atualizarRequisitos(newMatriz);
+
+            //Seta todos as disciplinas dependentes como falso
+            if (!newMatriz[id].completada) {
                 const queue = [...newMatriz[id].requisitoPara];
-                while(queue.length > 0){
+                while (queue.length > 0) {
                     const current = queue.shift()!;
+
                     current.completada = false;
-                    current.requisitoPara.forEach(reqPara => queue.push(reqPara));
+                    queue.push(...current.requisitoPara);
                 }
             }
 
-            atualizarRequisitos(newMatriz);
             calcularDisponibilidade(newMatriz);
             calcularImportancia(newMatriz);
             return newMatriz;
@@ -113,7 +118,13 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <MatrizContext.Provider
-            value={{ curso, matriz, completadasCount, definirMatriz, toggleCompletada }}
+            value={{
+                curso,
+                matriz,
+                completadasCount,
+                definirMatriz,
+                toggleCompletada,
+            }}
         >
             {children}
         </MatrizContext.Provider>

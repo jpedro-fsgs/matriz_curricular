@@ -88,7 +88,7 @@ def dfs(disciplina: Disciplina):
 
 def gerar_matriz(disciplinas_cursadas):
 
-    with open('matriz.json', 'r') as file:
+    with open('python_script/matriz.json', 'r') as file:
         data = json.load(file)
 
     matriz = Matriz(data)
@@ -103,9 +103,9 @@ def gerar_matriz(disciplinas_cursadas):
     output += matriz.bloqueadas_str()
     output += f"\n---\n# Grade\n" + str(matriz)
 
-    with open('output.md', 'w') as file:
+    with open('python_script/output.md', 'w') as file:
         file.write(output)
 
 
-disciplinas_cursadas = [3, 4, 5, 7, 14, 18, 20, 10, 15]
+disciplinas_cursadas = []
 gerar_matriz(disciplinas_cursadas)
