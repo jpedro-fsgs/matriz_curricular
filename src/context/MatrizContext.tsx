@@ -34,8 +34,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         setFilterMatriz(() => {
             return matriz.filter((disciplina) => {
                 const matchesSearch = search
-                    ? disciplina.nome
-                          .includes(search.toLowerCase())
+                    ? normalizeText(disciplina.nome).includes(normalizeText(search))
                     : true;
                 const matchesEstado = filterEstado
                     ? disciplina.estado === filterEstado
