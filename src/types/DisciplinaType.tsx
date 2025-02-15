@@ -10,10 +10,17 @@ export type DisciplinaJson = {
     natureza: string;
 }
 
+export enum EstadoDisciplina {
+    Completada = "Completada",
+    Disponível = "Disponível",
+    Bloqueada = "Bloqueada"
+}
+
 export type Disciplina = {
     id: number;
     nome: string;
     completada: boolean;
+    estado: EstadoDisciplina;
     importancia: number;
     unidadeResponsavel: string;
     preRequisitosId: number[];

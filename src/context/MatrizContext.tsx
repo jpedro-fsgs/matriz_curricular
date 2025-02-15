@@ -1,22 +1,65 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Disciplina, DisciplinaJson } from "@/types/DisciplinaType";
+import {
+    Disciplina,
+    DisciplinaJson,
+    EstadoDisciplina,
+} from "@/types/DisciplinaType";
+import { cursos } from "@/data/CursosData";
+import { normalizeText } from "@/utils/stringUtils";
 
 type MatrizContextType = {
     curso: string;
     matriz: Disciplina[];
     completadasCount: number;
-    definirMatriz: (nomeCurso: string, matrizJson: DisciplinaJson[]) => void;
+    filterMatriz: Disciplina[];
+    setSearch: (search: string) => void;
+    setFilterEstado: (estado: EstadoDisciplina) => void;
+    definirMatriz: (
+        cursoIndex: number,
+        matrizJson: DisciplinaJson[],
+        storedData: number[]
+    ) => void;
     toggleCompletada: (id: number) => void;
 };
+
+
 
 const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
+    const [filterMatriz, setFilterMatriz] = useState<Disciplina[]>([]);
     const [curso, setCurso] = useState<string>("");
+    const [cursoIndex, setCursoIndex] = useState<number>(0);
     const [completadasCount, setCompletadasCount] = useState(0);
+    const [search, setSearch] = useState<string>("");
+    const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
+        null
+    );
+
+    useEffect(() => {
+        const completadas = matriz
+            .filter((disciplina) => disciplina.completada)
+            .map((disciplina) => disciplina.id);
+        localStorage.setItem("matriz", JSON.stringify({ cursoIndex, completadas }));
+    }, [matriz, cursoIndex]);
+
+    useEffect(() => {
+        console.log(normalizeText("Cálculo"));
+        setFilterMatriz(() => {
+            return matriz.filter((disciplina) => {
+                const matchesSearch = search
+                    ? normalizeText(disciplina.nome).includes(normalizeText(search))
+                    : true;
+                const matchesEstado = filterEstado
+                    ? disciplina.estado === filterEstado
+                    : true;
+                return matchesSearch && matchesEstado;
+            });
+        });
+    }, [filterEstado, matriz, search]);
 
     useEffect(() => {
         setCompletadasCount(
@@ -26,13 +69,19 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         );
     }, [matriz]);
 
-    function definirMatriz(nomeCurso: string, matrizJson: DisciplinaJson[]) {
-        setCurso(nomeCurso);
+    function definirMatriz(
+        cursoIndex: number,
+        matrizJson: DisciplinaJson[],
+        storedData: number[]
+    ) {
+        setCursoIndex(cursoIndex)
+        setCurso(cursos[cursoIndex].nome);
 
         const newMatriz: Disciplina[] = matrizJson.map((disciplina) => ({
             id: disciplina.id - 1,
             nome: disciplina.nome,
             completada: false,
+            estado: EstadoDisciplina.Bloqueada,
             importancia: 0,
             unidadeResponsavel: disciplina.unidade_responsavel,
             preRequisitosId: disciplina.pre_requisitos.map((id) => id - 1),
@@ -45,6 +94,12 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
             nucleo: disciplina.nucleo,
             natureza: disciplina.natureza,
         }));
+
+        if (storedData) {
+            storedData.forEach(
+                (id) => (newMatriz[id].completada = true)
+            );
+        }
 
         atualizarRequisitos(newMatriz);
         calcularDisponibilidade(newMatriz);
@@ -72,7 +127,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
             while (stack.length > 0) {
                 const current = stack.pop()!;
                 visited.add(current.id);
-                current.requisitoPara.forEach((reqPara) => stack.push(reqPara));
+                stack.push(...current.requisitoPara);
             }
             disciplina.importancia = visited.size - 1;
         });
@@ -80,9 +135,15 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
     function calcularDisponibilidade(matriz: Disciplina[]) {
         matriz.forEach((disciplina) => {
-            disciplina.disponivel = disciplina.preRequisitos.every(
+            const disponivel = disciplina.preRequisitos.every(
                 (preRequisito) => preRequisito.completada
             );
+            disciplina.disponivel = disponivel;
+            disciplina.estado = disciplina.disponivel
+                ? disciplina.completada
+                    ? EstadoDisciplina.Completada
+                    : EstadoDisciplina.Disponível
+                : EstadoDisciplina.Bloqueada;
         });
     }
 
@@ -99,7 +160,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
             atualizarRequisitos(newMatriz);
 
-            //Seta todos as disciplinas dependentes como falso
+            //Seta todos as disciplinas dependentes como não completadas
             if (!newMatriz[id].completada) {
                 const queue = [...newMatriz[id].requisitoPara];
                 while (queue.length > 0) {
@@ -122,6 +183,9 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 curso,
                 matriz,
                 completadasCount,
+                filterMatriz,
+                setSearch,
+                setFilterEstado,
                 definirMatriz,
                 toggleCompletada,
             }}
