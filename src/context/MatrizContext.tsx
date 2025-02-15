@@ -1,12 +1,19 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Disciplina, DisciplinaJson } from "@/types/DisciplinaType";
+import {
+    Disciplina,
+    DisciplinaJson,
+    EstadoDisciplina,
+} from "@/types/DisciplinaType";
 
 type MatrizContextType = {
     curso: string;
     matriz: Disciplina[];
     completadasCount: number;
+    filterMatriz: Disciplina[];
+    setSearch: (search: string) => void;
+    setFilterEstado: (estado: EstadoDisciplina) => void;
     definirMatriz: (nomeCurso: string, matrizJson: DisciplinaJson[]) => void;
     toggleCompletada: (id: number) => void;
 };
@@ -15,8 +22,28 @@ const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
+    const [filterMatriz, setFilterMatriz] = useState<Disciplina[]>([]);
     const [curso, setCurso] = useState<string>("");
     const [completadasCount, setCompletadasCount] = useState(0);
+    const [search, setSearch] = useState<string>("");
+    const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
+        null
+    );
+
+    useEffect(() => {
+        setFilterMatriz(() => {
+            return matriz.filter((disciplina) => {
+                const matchesSearch = search
+                    ? disciplina.nome
+                          .includes(search.toLowerCase())
+                    : true;
+                const matchesEstado = filterEstado
+                    ? disciplina.estado === filterEstado
+                    : true;
+                return matchesSearch && matchesEstado;
+            });
+        });
+    }, [filterEstado, matriz, search]);
 
     useEffect(() => {
         setCompletadasCount(
@@ -33,6 +60,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
             id: disciplina.id - 1,
             nome: disciplina.nome,
             completada: false,
+            estado: EstadoDisciplina.Bloqueada,
             importancia: 0,
             unidadeResponsavel: disciplina.unidade_responsavel,
             preRequisitosId: disciplina.pre_requisitos.map((id) => id - 1),
@@ -72,7 +100,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
             while (stack.length > 0) {
                 const current = stack.pop()!;
                 visited.add(current.id);
-                current.requisitoPara.forEach((reqPara) => stack.push(reqPara));
+                stack.push(...current.requisitoPara);
             }
             disciplina.importancia = visited.size - 1;
         });
@@ -80,9 +108,15 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
     function calcularDisponibilidade(matriz: Disciplina[]) {
         matriz.forEach((disciplina) => {
-            disciplina.disponivel = disciplina.preRequisitos.every(
+            const disponivel = disciplina.preRequisitos.every(
                 (preRequisito) => preRequisito.completada
             );
+            disciplina.disponivel = disponivel;
+            disciplina.estado = disciplina.disponivel
+                ? disciplina.completada
+                    ? EstadoDisciplina.Completada
+                    : EstadoDisciplina.Disponível
+                : EstadoDisciplina.Bloqueada;
         });
     }
 
@@ -99,7 +133,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
             atualizarRequisitos(newMatriz);
 
-            //Seta todos as disciplinas dependentes como falso
+            //Seta todos as disciplinas dependentes como não completadas
             if (!newMatriz[id].completada) {
                 const queue = [...newMatriz[id].requisitoPara];
                 while (queue.length > 0) {
@@ -122,6 +156,9 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 curso,
                 matriz,
                 completadasCount,
+                filterMatriz,
+                setSearch,
+                setFilterEstado,
                 definirMatriz,
                 toggleCompletada,
             }}

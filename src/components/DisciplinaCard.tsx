@@ -7,9 +7,9 @@ import {
     CardContent,
     CardFooter,
 } from "./ui/card";
-import { Disciplina } from "@/types/DisciplinaType";
+import { Disciplina, EstadoDisciplina } from "@/types/DisciplinaType";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, CircleX } from "lucide-react";
+import { BanIcon, CheckCircle2, UnlockIcon } from "lucide-react";
 
 interface DisciplinaCardTypes {
     disciplina: Disciplina;
@@ -22,7 +22,7 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
             onClick={onClick}
             className={cn(
                 "w-96 h-96",
-                { "cursor-pointer hover:scale-[1.025]": disciplina.disponivel },
+                { "cursor-pointer hover:scale-[1.025] hover:bg-primary-foreground": disciplina.disponivel },
                 { "opacity-50": !disciplina.disponivel },
                 { "border-green-600": disciplina.completada }
             )}
@@ -30,25 +30,22 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
             <CardHeader>
                 <CardTitle className="flex justify-between items-center">
                     <p>{disciplina.nome}</p>
-                    {disciplina.completada ? (
+                    {disciplina.estado == EstadoDisciplina.Completada ? (
                         <CheckCircle2 color="green" />
+                    ) : disciplina.estado == EstadoDisciplina.Bloqueada ?(
+                        <BanIcon color="red" />
                     ) : (
-                        <CircleX color="red" />
+                        <UnlockIcon />
                     )}
                 </CardTitle>
                 <CardDescription>
-                    {disciplina.disponivel
-                        ? disciplina.completada
-                            ? "Completada"
-                            : "Pendente"
-                        : "Bloqueada"}
+                    {disciplina.estado}
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 {!disciplina.completada && disciplina.importancia > 0 && (
                     <p className="text-destructive font-semibold">
-                        Bloqueia {disciplina.importancia} disciplina
-                        {disciplina.importancia > 1 && "s"}
+                        Bloqueia {disciplina.importancia} disciplinas
                     </p>
                 )}
 
@@ -61,15 +58,13 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
                                     key={`pr-${disciplina.id}-${preRequisito.id}`}
                                     className="ml-4 space-x-1"
                                 >
-                                    <span className="flex items-center gap-1">
-                                        <p>{preRequisito.nome}</p>
-                                        {preRequisito.completada && (
-                                            <CheckCircle2
-                                                color="green"
-                                                size="16"
-                                            />
-                                        )}
-                                    </span>
+                                    <span className="flex items-center gap-1"><p>{preRequisito.nome}</p>
+                                    {preRequisito.completada && (
+                                        <CheckCircle2
+                                            color="green"
+                                            size="16"
+                                        />
+                                    )}</span>
                                 </li>
                             ))}
                         </ul>
@@ -84,16 +79,14 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
                                     key={`rq-${disciplina.id}${para.id}`}
                                     className="ml-4 space-x-1"
                                 >
-                                    <span className="flex items-center gap-1">
-                                        <p className="inline">{para.nome}</p>
-                                        {para.completada && (
-                                            <CheckCircle2
-                                                className="inline"
-                                                color="green"
-                                                size="16"
-                                            />
-                                        )}
-                                    </span>
+                                    <span className="flex items-center gap-1" ><p className="inline">{para.nome}</p>
+                                    {para.completada && (
+                                        <CheckCircle2
+                                            className="inline"
+                                            color="green"
+                                            size="16"
+                                        />
+                                    )}</span>
                                 </li>
                             ))}
                         </ul>
