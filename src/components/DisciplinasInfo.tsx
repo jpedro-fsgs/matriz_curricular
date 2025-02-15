@@ -39,8 +39,8 @@ function DisciplinasInfo() {
                                 className="flex justify-between text-sm"
                                 >
                                 <span>{disciplina.nome}</span>
-                                {disciplina.importancia > 1 && <Badge
-                                    className="w-8 h-5 text-center flex items-center justify-center"
+                                {disciplina.importancia > 0 && <Badge
+                                    className="w-8 h-5 mr-1 text-center flex items-center justify-center"
                                     variant="destructive"
                                 >
                                     {disciplina.importancia}
