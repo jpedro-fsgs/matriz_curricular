@@ -7,23 +7,13 @@ import {
 } from "./ui/select";
 import { Input } from "./ui/input";
 
-import matrizSI from "@/data/matrizSI.json";
-import matrizCC from "@/data/matrizCC.json";
 import { useMatriz } from "@/context/MatrizContext";
 import { Button } from "./ui/button";
 import { useRef } from "react";
 import { XIcon } from "lucide-react";
+import { cursos } from "@/data/CursosData";
 
-const cursos = [
-    {
-        nome: "Sistemas de Informação",
-        matriz: matrizSI,
-    },
-    {
-        nome: "Ciência da Computação",
-        matriz: matrizCC,
-    },
-];
+
 
 function CursoSelector() {
     const { definirMatriz, setSearch } = useMatriz();
@@ -31,9 +21,10 @@ function CursoSelector() {
     const inputRef = useRef<HTMLInputElement>(null);
 
     function handleSelect(cursoKey: string) {
-        const curso = cursos[Number(cursoKey)];
+        const cursoIndex = Number(cursoKey);
 
-        definirMatriz(curso.nome, curso.matriz);
+
+        definirMatriz(cursoIndex, cursos[cursoIndex].matriz, []);
     }
 
     function handleClearSearch() {

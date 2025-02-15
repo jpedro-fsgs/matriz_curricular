@@ -6,6 +6,8 @@ import {
     DisciplinaJson,
     EstadoDisciplina,
 } from "@/types/DisciplinaType";
+import { cursos } from "@/data/CursosData";
+import { normalizeText } from "@/utils/stringUtils";
 
 type MatrizContextType = {
     curso: string;
@@ -14,9 +16,15 @@ type MatrizContextType = {
     filterMatriz: Disciplina[];
     setSearch: (search: string) => void;
     setFilterEstado: (estado: EstadoDisciplina) => void;
-    definirMatriz: (nomeCurso: string, matrizJson: DisciplinaJson[]) => void;
+    definirMatriz: (
+        cursoIndex: number,
+        matrizJson: DisciplinaJson[],
+        storedData: number[]
+    ) => void;
     toggleCompletada: (id: number) => void;
 };
+
+
 
 const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
@@ -24,6 +32,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
     const [filterMatriz, setFilterMatriz] = useState<Disciplina[]>([]);
     const [curso, setCurso] = useState<string>("");
+    const [cursoIndex, setCursoIndex] = useState<number>(0);
     const [completadasCount, setCompletadasCount] = useState(0);
     const [search, setSearch] = useState<string>("");
     const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
@@ -31,6 +40,14 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     );
 
     useEffect(() => {
+        const completadas = matriz
+            .filter((disciplina) => disciplina.completada)
+            .map((disciplina) => disciplina.id);
+        localStorage.setItem("matriz", JSON.stringify({ cursoIndex, completadas }));
+    }, [matriz, cursoIndex]);
+
+    useEffect(() => {
+        console.log(normalizeText("Cálculo"));
         setFilterMatriz(() => {
             return matriz.filter((disciplina) => {
                 const matchesSearch = search
@@ -52,8 +69,13 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         );
     }, [matriz]);
 
-    function definirMatriz(nomeCurso: string, matrizJson: DisciplinaJson[]) {
-        setCurso(nomeCurso);
+    function definirMatriz(
+        cursoIndex: number,
+        matrizJson: DisciplinaJson[],
+        storedData: number[]
+    ) {
+        setCursoIndex(cursoIndex)
+        setCurso(cursos[cursoIndex].nome);
 
         const newMatriz: Disciplina[] = matrizJson.map((disciplina) => ({
             id: disciplina.id - 1,
@@ -72,6 +94,12 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
             nucleo: disciplina.nucleo,
             natureza: disciplina.natureza,
         }));
+
+        if (storedData) {
+            storedData.forEach(
+                (id) => (newMatriz[id].completada = true)
+            );
+        }
 
         atualizarRequisitos(newMatriz);
         calcularDisponibilidade(newMatriz);

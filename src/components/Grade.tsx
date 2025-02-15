@@ -1,16 +1,25 @@
 "use client";
 
 import React, { useEffect } from "react";
-import matrizJson from "@/data/matrizSI.json";
 import DisciplinaCard from "./DisciplinaCard";
 import { useMatriz } from "@/context/MatrizContext";
 import EstadoSelector from "./EstadoSelector";
+import { cursos } from "@/data/CursosData";
 
 function Grade() {
     const { matriz, filterMatriz, curso, completadasCount, definirMatriz, toggleCompletada } = useMatriz();
 
     useEffect(() => {
-        definirMatriz("Sistemas de Informação", matrizJson);
+        const storedData = localStorage.getItem("matriz");
+
+        if(storedData){
+            const parsedData = JSON.parse(storedData);
+            definirMatriz(parsedData.cursoIndex, cursos[parsedData.cursoIndex].matriz, parsedData.completadas);
+        } else {
+
+            definirMatriz(cursos[0].index, cursos[0].matriz, []);
+        }
+
         // eslint-disable-next-line
     }, []);
 
