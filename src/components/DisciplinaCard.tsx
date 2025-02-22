@@ -45,7 +45,7 @@ function DisciplinaCard({ disciplina, onClick }: DisciplinaCardTypes) {
             <CardContent className="space-y-4">
                 {!disciplina.completada && disciplina.importancia > 0 && (
                     <p className="text-destructive font-semibold">
-                        Bloqueia {disciplina.importancia} disciplinas
+                        Bloqueia {disciplina.importancia} disciplina{disciplina.importancia > 1 ? "s" : ""}
                     </p>
                 )}
 

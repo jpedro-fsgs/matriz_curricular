@@ -47,7 +47,6 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     }, [matriz, cursoIndex]);
 
     useEffect(() => {
-        console.log(normalizeText("Cálculo"));
         setFilterMatriz(() => {
             return matriz.filter((disciplina) => {
                 const matchesSearch = search
