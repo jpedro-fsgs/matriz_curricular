@@ -7,7 +7,12 @@ export type DisciplinaJson = {
     ch_pratica: number;
     cht: number;
     nucleo: string;
-    natureza: string;
+    natureza: string | null;
+}
+
+export type MatrizJson = {
+    obrigatorias: DisciplinaJson[];
+    optativas: DisciplinaJson[];
 }
 
 export enum EstadoDisciplina {
@@ -31,5 +36,5 @@ export type Disciplina = {
     chPratica: number;
     cht: number;
     nucleo: string;
-    natureza: string;
+    natureza: string | null;
 }

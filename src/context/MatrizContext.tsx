@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
     Disciplina,
-    DisciplinaJson,
     EstadoDisciplina,
+    MatrizJson,
 } from "@/types/DisciplinaType";
 import { cursos } from "@/data/CursosData";
 import { normalizeText } from "@/utils/stringUtils";
@@ -18,7 +18,7 @@ type MatrizContextType = {
     setFilterEstado: (estado: EstadoDisciplina) => void;
     definirMatriz: (
         cursoIndex: number,
-        matrizJson: DisciplinaJson[],
+        matrizJson: MatrizJson,
         storedData: number[]
     ) => void;
     toggleCompletada: (id: number) => void;
@@ -70,13 +70,13 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
     function definirMatriz(
         cursoIndex: number,
-        matrizJson: DisciplinaJson[],
+        matrizJson: MatrizJson,
         storedData: number[]
     ) {
         setCursoIndex(cursoIndex)
         setCurso(cursos[cursoIndex].nome);
 
-        const newMatriz: Disciplina[] = matrizJson.map((disciplina) => ({
+        const newMatriz: Disciplina[] = matrizJson.obrigatorias.map((disciplina) => ({
             id: disciplina.id - 1,
             nome: disciplina.nome,
             completada: false,
