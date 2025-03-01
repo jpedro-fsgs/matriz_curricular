@@ -6,8 +6,8 @@ import {
     EstadoDisciplina,
     MatrizJson,
 } from "@/types/DisciplinaType";
-import { cursos } from "@/data/CursosData";
 import { normalizeText } from "@/utils/stringUtils";
+import { cursos } from "@/data/CursosData";
 
 type MatrizContextType = {
     curso: string;
@@ -24,8 +24,6 @@ type MatrizContextType = {
     toggleCompletada: (id: number) => void;
 };
 
-
-
 const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
@@ -40,17 +38,54 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     );
 
     useEffect(() => {
+        const storedIndex = localStorage.getItem("cursoIndex");
+
+        if (storedIndex !== null) {
+            const parsedIndex = JSON.parse(storedIndex);
+
+            const storedData = localStorage.getItem(`matriz-${parsedIndex}`);
+
+            if (storedData !== null) {
+                const parsedData = JSON.parse(storedData);
+                definirMatriz(
+                    parsedIndex,
+                    cursos[parsedIndex].matriz,
+                    parsedData
+                );
+                return;
+            }
+        }
+
+        definirMatriz(0, cursos[0].matriz, []);
+
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if(matriz.length === 0) return;
         const completadas = matriz
             .filter((disciplina) => disciplina.completada)
             .map((disciplina) => disciplina.id);
-        localStorage.setItem("matriz", JSON.stringify({ cursoIndex, completadas }));
+
+        localStorage.setItem(
+            `matriz-${cursoIndex}`,
+            JSON.stringify(completadas)
+        );
     }, [matriz, cursoIndex]);
+
+    useEffect(() => {
+        localStorage.setItem("cursoIndex", JSON.stringify(cursoIndex));
+    }, [cursoIndex]);
+
+    useEffect(() => console.log(localStorage), [matriz, cursoIndex]);
 
     useEffect(() => {
         setFilterMatriz(() => {
             return matriz.filter((disciplina) => {
                 const matchesSearch = search
-                    ? normalizeText(disciplina.nome).includes(normalizeText(search))
+                    ? normalizeText(disciplina.nome).includes(
+                          normalizeText(search)
+                      )
                     : true;
                 const matchesEstado = filterEstado
                     ? disciplina.estado === filterEstado
@@ -69,35 +104,33 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     }, [matriz]);
 
     function definirMatriz(
-        cursoIndex: number,
+        cursoNewIndex: number,
         matrizJson: MatrizJson,
         storedData: number[]
     ) {
-        setCursoIndex(cursoIndex)
-        setCurso(cursos[cursoIndex].nome);
+        setCursoIndex(cursoNewIndex);
+        setCurso(matrizJson.nomeCurso);
 
-        const newMatriz: Disciplina[] = matrizJson.obrigatorias.map((disciplina) => ({
-            id: disciplina.id - 1,
-            nome: disciplina.nome,
-            completada: false,
-            estado: EstadoDisciplina.Bloqueada,
-            importancia: 0,
-            unidadeResponsavel: disciplina.unidade_responsavel,
-            preRequisitosId: disciplina.pre_requisitos.map((id) => id - 1),
-            preRequisitos: [],
-            requisitoPara: [],
-            disponivel: false,
-            chTeorica: disciplina.ch_teorica,
-            chPratica: disciplina.ch_pratica,
-            cht: disciplina.cht,
-            nucleo: disciplina.nucleo,
-            natureza: disciplina.natureza,
-        }));
+        const newMatriz: Disciplina[] = matrizJson.disciplinas.map(
+            (disciplina) => ({
+                id: disciplina.id,
+                nome: disciplina.nome,
+                codigo: disciplina.codigo,
+                completada: false,
+                estado: EstadoDisciplina.Bloqueada,
+                importancia: 0,
+                preRequisitosId: disciplina.pre_requisitos,
+                preRequisitos: [],
+                requisitoPara: [],
+                disponivel: false,
+                ch: disciplina.ch,
+                nucleo: disciplina.nucleo,
+                natureza: disciplina.natureza,
+            })
+        );
 
         if (storedData) {
-            storedData.forEach(
-                (id) => (newMatriz[id].completada = true)
-            );
+            storedData.forEach((id) => (newMatriz[id].completada = true));
         }
 
         atualizarRequisitos(newMatriz);

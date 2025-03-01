@@ -1,19 +1,18 @@
 export type DisciplinaJson = {
     id: number;
+    codigo: string;
     nome: string;
-    unidade_responsavel: string;
+    ch: string;
     pre_requisitos: number[];
-    ch_teorica: number;
-    ch_pratica: number;
-    cht: number;
     nucleo: string;
-    natureza: string | null;
+    natureza: string;
 }
 
 export type MatrizJson = {
-    obrigatorias: DisciplinaJson[];
-    optativas: DisciplinaJson[];
+    nomeCurso: string;
+    disciplinas: DisciplinaJson[];
 }
+
 
 export enum EstadoDisciplina {
     Completada = "Completada",
@@ -24,17 +23,15 @@ export enum EstadoDisciplina {
 export type Disciplina = {
     id: number;
     nome: string;
+    codigo: string;
     completada: boolean;
     estado: EstadoDisciplina;
     importancia: number;
-    unidadeResponsavel: string;
     preRequisitosId: number[];
     preRequisitos: Disciplina[];
     requisitoPara: Disciplina[];
     disponivel: boolean;
-    chTeorica: number;
-    chPratica: number;
-    cht: number;
+    ch: string;
     nucleo: string;
-    natureza: string | null;
+    natureza: string;
 }
