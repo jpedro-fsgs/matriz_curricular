@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
+    Completadas,
     Disciplina,
     EstadoDisciplina,
     MatrizJson,
@@ -12,8 +13,9 @@ import { cursos } from "@/data/CursosData";
 type MatrizContextType = {
     curso: string;
     matriz: Disciplina[];
-    completadasCount: number;
-    filterMatriz: Disciplina[];
+    completadasCount: Completadas;
+    filterMatrizObrigatorias: Disciplina[];
+    filterMatrizOptativas: Disciplina[];
     setSearch: (search: string) => void;
     setFilterEstado: (estado: EstadoDisciplina) => void;
     definirMatriz: (
@@ -28,10 +30,15 @@ const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
-    const [filterMatriz, setFilterMatriz] = useState<Disciplina[]>([]);
+    const [filterMatrizObrigatorias, setFilterMatrizObrigatorias] = useState<
+        Disciplina[]
+    >([]);
+    const [filterMatrizOptativas, setFilterMatrizOptativas] = useState<
+        Disciplina[]
+    >([]);
     const [curso, setCurso] = useState<string>("");
     const [cursoIndex, setCursoIndex] = useState<number>(0);
-    const [completadasCount, setCompletadasCount] = useState(0);
+    const [completadasCount, setCompletadasCount] = useState<Completadas>({completadas: 0, total: 0});
     const [search, setSearch] = useState<string>("");
     const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
         null
@@ -62,7 +69,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if(matriz.length === 0) return;
+        if (matriz.length === 0) return;
         const completadas = matriz
             .filter((disciplina) => disciplina.completada)
             .map((disciplina) => disciplina.id);
@@ -80,7 +87,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => console.log(localStorage), [matriz, cursoIndex]);
 
     useEffect(() => {
-        setFilterMatriz(() => {
+        setFilterMatrizObrigatorias(() => {
             return matriz.filter((disciplina) => {
                 const matchesSearch = search
                     ? normalizeText(disciplina.nome).includes(
@@ -90,17 +97,40 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 const matchesEstado = filterEstado
                     ? disciplina.estado === filterEstado
                     : true;
-                return matchesSearch && matchesEstado;
+                return (
+                    matchesSearch &&
+                    matchesEstado &&
+                    disciplina.natureza == "OBRIG."
+                );
+            });
+        });
+
+        setFilterMatrizOptativas(() => {
+            return matriz.filter((disciplina) => {
+                const matchesSearch = search
+                    ? normalizeText(disciplina.nome).includes(
+                          normalizeText(search)
+                      )
+                    : true;
+                const matchesEstado = filterEstado
+                    ? disciplina.estado === filterEstado
+                    : true;
+                return (
+                    matchesSearch &&
+                    matchesEstado &&
+                    disciplina.natureza == "OPTAT."
+                );
             });
         });
     }, [filterEstado, matriz, search]);
 
     useEffect(() => {
-        setCompletadasCount(
-            matriz.reduce((count, disciplina) => {
+        setCompletadasCount({
+            completadas: matriz.reduce((count, disciplina) => {
                 return count + (disciplina.completada ? 1 : 0);
-            }, 0)
-        );
+            }, 0),
+            total: matriz.filter((disciplina) => disciplina.natureza === "OBRIG.").length,
+        });
     }, [matriz]);
 
     function definirMatriz(
@@ -109,10 +139,14 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         storedData: number[]
     ) {
         setCursoIndex(cursoNewIndex);
-        setCurso(matrizJson.nomeCurso);
+        setCurso(matrizJson.nome_curso);
 
-        const newMatriz: Disciplina[] = matrizJson.disciplinas.map(
-            (disciplina) => ({
+        const newMatriz: Disciplina[] = [
+            ...matrizJson.disciplinas.obrigatorias,
+            ...matrizJson.disciplinas.optativas,
+        ]
+            .sort((a, b) => a.id - b.id)
+            .map((disciplina) => ({
                 id: disciplina.id,
                 nome: disciplina.nome,
                 codigo: disciplina.codigo,
@@ -126,8 +160,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 ch: disciplina.ch,
                 nucleo: disciplina.nucleo,
                 natureza: disciplina.natureza,
-            })
-        );
+            }));
 
         if (storedData) {
             storedData.forEach((id) => (newMatriz[id].completada = true));
@@ -158,6 +191,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
             while (stack.length > 0) {
                 const current = stack.pop()!;
+                if(current.natureza == "OPTAT.") continue;
                 visited.add(current.id);
                 stack.push(...current.requisitoPara);
             }
@@ -215,7 +249,8 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 curso,
                 matriz,
                 completadasCount,
-                filterMatriz,
+                filterMatrizObrigatorias,
+                filterMatrizOptativas,
                 setSearch,
                 setFilterEstado,
                 definirMatriz,

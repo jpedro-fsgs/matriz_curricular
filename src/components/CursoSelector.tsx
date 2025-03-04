@@ -44,7 +44,7 @@ function CursoSelector() {
                     <SelectContent>
                         {cursos.map((curso, index) => (
                             <SelectItem value={index.toString()} key={index}>
-                                {curso.matriz.nomeCurso}
+                                {curso.matriz.nome_curso}
                             </SelectItem>
                         ))}
                     </SelectContent>
