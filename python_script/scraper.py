@@ -3,7 +3,29 @@ import pdfplumber
 import re
 from ollama import chat, ChatResponse
 
-def parse(disciplina_string):
+
+def parse_llm(input: list):
+    prompt = open("python_script/prompt.txt", "r").read()
+
+    outputs = []
+
+    
+    for i in [line for line in input if re.match(r'^\d{1,2}\.', line)]:
+        response: ChatResponse = chat(model='llama3.2', messages=[
+            {
+                'role': 'user',
+                'content': prompt + i,
+            },
+        ])
+        print(response.message.content)
+        try:
+            outputs.append(json.loads(response.message.content))
+        except json.JSONDecodeError:
+            print("ERRO NO JSON")
+
+    return outputs
+
+def parseSI(disciplina_string):
     pattern = (
         r"^(\d+)\.\s+"
         r"(.+?)\s+"
@@ -60,41 +82,25 @@ def parse(disciplina_string):
     except Exception:
         return None
 
-def parse_llm(input: list):
-    prompt = open("python_script/prompt.txt", "r").read()
 
-    outputs = []
+def get_matriz_SI():
+    with pdfplumber.open("python_script/data/PPC-BSI-2017_atualizado-2021.pdf") as pdf:
+        output = ('\n'.join([page.extract_text() for page in pdf.pages[18:22]])).split('\n')
 
-    
-    for i in [line for line in input if re.match(r'^\d{1,2}\.', line)]:
-        response: ChatResponse = chat(model='llama3.2', messages=[
-            {
-                'role': 'user',
-                'content': prompt + i,
-            },
-        ])
-        print(response.message.content)
-        try:
-            outputs.append(json.loads(response.message.content))
-        except json.JSONDecodeError:
-            print("ERRO NO JSON")
+    parsed_lines = [parseSI(line) for line in output]
+    matriz = [line for line in parsed_lines if line]
 
-    return outputs
+    with open("python_script/data/output.json", "w") as f:
+        json.dump(matriz, f, ensure_ascii=False, indent=4)
 
 
+def get_matriz_cc():
+    with pdfplumber.open("python_script/data/Projeto-Pedagogico-CC-2017-1.pdf") as pdf:
+        output = [page.extract_tables() for page in pdf.pages[18:21]]
 
-with pdfplumber.open("python_script/data/PPC-BSI-2017_atualizado-2021.pdf") as pdf:
-    output = ('\n'.join([page.extract_text() for page in pdf.pages[18:22]])).split('\n')
+    for i in output:
+        for j in i:
+            for k in j:
+                print(k)
 
-# matriz = parse_llm(output)
-
-
-parsed_lines = [parse(line) for line in output]
-matriz = [line for line in parsed_lines if line]
-
-
-with open("python_script/data/output.json", "w") as f:
-    json.dump(matriz, f, ensure_ascii=False, indent=4)
-
-
-
+get_matriz_cc()
