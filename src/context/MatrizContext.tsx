@@ -125,11 +125,16 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     }, [filterEstado, matriz, search]);
 
     useEffect(() => {
+        const matrizF = matriz.filter((disciplina) => disciplina.natureza === "OBRIG.");
+        const obrigatorias = matrizF.reduce((count, disciplina) => {
+            return count + (disciplina.completada ? 1 : 0);
+        }, 0);
+        const optativas = matriz.filter((disciplina) => disciplina.natureza === "OPTAT.").reduce((count, disciplina) => {
+            return count + (disciplina.completada ? 1 : 0);
+        }, 0);
         setCompletadasCount({
-            completadas: matriz.reduce((count, disciplina) => {
-                return count + (disciplina.completada ? 1 : 0);
-            }, 0),
-            total: matriz.filter((disciplina) => disciplina.natureza === "OBRIG.").length,
+            completadas: obrigatorias + (optativas > 2 ? 2 : optativas),
+            total: matrizF.length + 2,
         });
     }, [matriz]);
 

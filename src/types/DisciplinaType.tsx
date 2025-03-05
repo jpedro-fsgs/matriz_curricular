@@ -6,18 +6,24 @@ export type DisciplinaJson = {
     pre_requisitos: number[];
     nucleo: string;
     natureza: string;
-}
+};
 
 export type MatrizJson = {
-    nomeCurso: string;
-    disciplinas: DisciplinaJson[];
-}
+    nome_curso: string;
+    optativas: number;
+    nucleo_livre: number;
+    disciplinas: {
+        obrigatorias: DisciplinaJson[];
+        optativas: DisciplinaJson[];
+    };
+};
 
+export type Completadas = { completadas: number; total: number };
 
 export enum EstadoDisciplina {
     Completada = "Completada",
     Disponível = "Disponível",
-    Bloqueada = "Bloqueada"
+    Bloqueada = "Bloqueada",
 }
 
 export type Disciplina = {
@@ -34,4 +40,4 @@ export type Disciplina = {
     ch: string;
     nucleo: string;
     natureza: string;
-}
+};

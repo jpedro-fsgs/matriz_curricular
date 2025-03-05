@@ -5,6 +5,7 @@ import DisciplinaCard from "./DisciplinaCard";
 import { useMatriz } from "@/context/MatrizContext";
 import EstadoSelector from "./EstadoSelector";
 import DisciplinasInfo from "./DisciplinasInfo";
+import { Progress } from "./ui/progress";
 
 function Grade() {
     const {
@@ -20,10 +21,11 @@ function Grade() {
             <h1 className="text-4xl text-center p-8">
                 {curso} ({completadasCount.completadas}/{completadasCount.total})
             </h1>
+            <Progress className="w-11/12 md:w-3/4 mx-auto mb-6" value={completadasCount.completadas/completadasCount.total * 100} />
             <DisciplinasInfo />
             <EstadoSelector />
 
-            <h2 className="text-center rounded-xl p-3 m-4 text-2xl text-secondary-foreground bg-secondary">Obrigatórias</h2>
+            <h2 className="rounded-xl p-3 m-4 text-2xl text-secondary-foreground bg-secondary">Obrigatórias</h2>
             <div className="flex flex-wrap gap-5 justify-center">
                 {filterMatrizObrigatorias.map((disciplina) => (
                     <DisciplinaCard
