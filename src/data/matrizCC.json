@@ -1,0 +1,839 @@
+{
+    "nome_curso": "CIÊNCIA DA COMPUTAÇÃO - Goiânia - Presencial - MVN - BACHARELADO",
+    "codigo": "CICOMP-BI-3",
+    "optativas_h": 256,
+    "nucleo_livre_h": 128,
+    "disciplinas": {
+        "obrigatorias": [
+            {
+                "id": 0,
+                "codigo": "IME0350",
+                "nome": "CÁLCULO 1A",
+                "ch": "96h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 1,
+                "codigo": "INF0283",
+                "nome": "COMPUTAÇÃO E SOCIEDADE",
+                "ch": "32h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 2,
+                "codigo": "INF0284",
+                "nome": "INTRODUÇÃO À PROGRAMAÇÃO",
+                "ch": "128h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 3,
+                "codigo": "INF0285",
+                "nome": "FUNDAMENTOS DE MATEMÁTICA PARA COMPUTAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 4,
+                "codigo": "IFI0203",
+                "nome": "FÍSICA I",
+                "ch": "64h",
+                "pre_requisitos": [
+                    0
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 5,
+                "codigo": "IME0080",
+                "nome": "CÁLCULO 2A",
+                "ch": "96h",
+                "pre_requisitos": [
+                    0
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 6,
+                "codigo": "IME0345",
+                "nome": "GEOMETRIA ANALÍTICA",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 7,
+                "codigo": "INF0286",
+                "nome": "ALGORITMOS E ESTRUTURAS DE DADOS 1",
+                "ch": "64h",
+                "pre_requisitos": [
+                    2
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 8,
+                "codigo": "INF0305",
+                "nome": "LÓGICA MATEMÁTICA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 9,
+                "codigo": "IFI0325",
+                "nome": "FÍSICA III",
+                "ch": "64h",
+                "pre_requisitos": [
+                    0
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 10,
+                "codigo": "IME0351",
+                "nome": "ÁLGEBRA LINEAR",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 11,
+                "codigo": "IME0378",
+                "nome": "PROBABILIDADE E ESTATÍSTICA A",
+                "ch": "64h",
+                "pre_requisitos": [
+                    0
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 12,
+                "codigo": "INF0287",
+                "nome": "ALGORITMOS E ESTRUTURAS DE DADOS 2",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 13,
+                "codigo": "INF0330",
+                "nome": "METODOLOGIA DE PESQUISA EM COMPUTAÇÃO",
+                "ch": "32h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 14,
+                "codigo": "INF0331",
+                "nome": "MATEMÁTICA DISCRETA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 15,
+                "codigo": "EMC0292",
+                "nome": "CIRCUITOS DIGITAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 16,
+                "codigo": "IME0108",
+                "nome": "EQUAÇÕES DIFERENCIAIS ORDINÁRIAS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    10,
+                    5
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 17,
+                "codigo": "INF0164",
+                "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    2
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 18,
+                "codigo": "INF0313",
+                "nome": "PESQUISA OPERACIONAL",
+                "ch": "64h",
+                "pre_requisitos": [
+                    10
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 19,
+                "codigo": "INF0332",
+                "nome": "TEORIA DOS GRAFOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    14
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 20,
+                "codigo": "EMC0152",
+                "nome": "ELETRÔNICA PARA COMPUTAÇÃO",
+                "ch": "96h",
+                "pre_requisitos": [
+                    9
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 21,
+                "codigo": "IME0065",
+                "nome": "CÁLCULO NUMÉRICO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    16
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 22,
+                "codigo": "INF0013",
+                "nome": "ANÁLISE E PROJETO DE ALGORITMOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3,
+                    12
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 23,
+                "codigo": "INF0015",
+                "nome": "ARQUITETURA DE COMPUTADORES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 24,
+                "codigo": "INF0334",
+                "nome": "SOFTWARE BÁSICO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 25,
+                "codigo": "INF0022",
+                "nome": "BANCO DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 26,
+                "codigo": "INF0056",
+                "nome": "ENGENHARIA DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 27,
+                "codigo": "INF0288",
+                "nome": "LINGUAGENS E PARADIGMAS DE PROGRAMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    2
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 28,
+                "codigo": "INF0333",
+                "nome": "LINGUAGENS FORMAIS E AUTÔMATOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 29,
+                "codigo": "INF0336",
+                "nome": "SISTEMAS OPERACIONAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7,
+                    23
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 30,
+                "codigo": "INF0335",
+                "nome": "INTRODUÇÃO À COMPUTABILIDADE E À COMPLEXIDADE COMPUTACIONAL",
+                "ch": "64h",
+                "pre_requisitos": [
+                    22,
+                    28
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 31,
+                "codigo": "INF0339",
+                "nome": "ENGENHARIA DE REQUISITOS",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 32,
+                "codigo": "INF0340",
+                "nome": "SISTEMAS GERENCIADORES DE BANCO DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    25
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 33,
+                "codigo": "INF0341",
+                "nome": "REDES DE COMPUTADORES 1",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 35,
+                "codigo": "INF0174",
+                "nome": "PROJETO FINAL DE CURSO 1",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 36,
+                "codigo": "INF0290",
+                "nome": "PROJETO DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [
+                    26,
+                    17
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 37,
+                "codigo": "INF0338",
+                "nome": "COMPUTAÇÃO GRÁFICA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    6
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 38,
+                "codigo": "INF0342",
+                "nome": "INTELIGÊNCIA ARTIFICIAL",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7,
+                    8,
+                    11
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 39,
+                "codigo": "INF0344",
+                "nome": "SISTEMAS DISTRIBUÍDOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    33
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 73,
+                "codigo": "INF0177",
+                "nome": "PROJETO FINAL DE CURSO 2",
+                "ch": "64h",
+                "pre_requisitos": [
+                    35
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 74,
+                "codigo": "INF0289",
+                "nome": "INTERAÇÃO HUMANO-COMPUTADOR",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7,
+                    11
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 75,
+                "codigo": "INF0337",
+                "nome": "COMPILADORES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    12,
+                    28
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 76,
+                "codigo": "INF0345",
+                "nome": "COMPUTAÇÃO PARALELA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    39
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            }
+        ],
+        "optativas": [
+            {
+                "id": 34,
+                "codigo": "INF0370",
+                "nome": "PROCESSAMENTO DIGITAL DE IMAGENS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    10,
+                    2
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 40,
+                "codigo": "FAL0214",
+                "nome": "INTRODUÇÃO À LÍNGUA BRASILEIRA DE SINAIS",
+                "ch": "LIBRAS",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 41,
+                "codigo": "INF0294",
+                "nome": "ENGENHARIA DE SISTEMAS",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 42,
+                "codigo": "INF0321",
+                "nome": "SEGURANÇA E AUDITORIA DE SISTEMAS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    33
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 43,
+                "codigo": "INF0322",
+                "nome": "DESENVOLVIMENTO DE SISTEMAS PARA WEB",
+                "ch": "64h",
+                "pre_requisitos": [
+                    17
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 44,
+                "codigo": "INF0327",
+                "nome": "EMPREENDEDORISMO DIGITAL",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 45,
+                "codigo": "INF0328",
+                "nome": "COMPUTAÇÃO MÓVEL E UBÍQUA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    17,
+                    36
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 46,
+                "codigo": "INF0343",
+                "nome": "REDES DE COMPUTADORES 2",
+                "ch": "64h",
+                "pre_requisitos": [
+                    33
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 47,
+                "codigo": "INF0354",
+                "nome": "APRENDIZAGEM DE MÁQUINA E MINERAÇÃO DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    38
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 48,
+                "codigo": "INF0355",
+                "nome": "ARMAZÉM DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    32
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 49,
+                "codigo": "INF0356",
+                "nome": "AVALIAÇÃO DE DESEMPENHO DE SISTEMAS COMPUTACIONAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 50,
+                "codigo": "INF0357",
+                "nome": "BANCO DE DADOS DISTRIBUÍDOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    32
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 51,
+                "codigo": "INF0358",
+                "nome": "COMPUTAÇÃO EVOLUCIONÁRIA",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 52,
+                "codigo": "INF0359",
+                "nome": "COMPUTAÇÃO VERDE",
+                "ch": "64h",
+                "pre_requisitos": [
+                    33
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 53,
+                "codigo": "INF0360",
+                "nome": "DESENVOLVIMENTO DE SOFTWARE DIRIGIDO POR MODELOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7,
+                    17
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 54,
+                "codigo": "INF0361",
+                "nome": "ENGENHARIA DE SOFTWARE BASEADA EM BUSCA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    26
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 55,
+                "codigo": "INF0362",
+                "nome": "FUNDAMENTOS DA PROGRAMAÇÃO LÓGICA E FUNCIONAL",
+                "ch": "64h",
+                "pre_requisitos": [
+                    27,
+                    8
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 56,
+                "codigo": "INF0363",
+                "nome": "INTEGRAÇÃO DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    32
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 57,
+                "codigo": "INF0364",
+                "nome": "INTRODUÇÃO À TEORIA DAS PROVAS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 58,
+                "codigo": "INF0365",
+                "nome": "INTRODUÇÃO À TEORIA DOS TIPOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 59,
+                "codigo": "INF0366",
+                "nome": "JOGOS DIGITAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    17
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 60,
+                "codigo": "INF0367",
+                "nome": "META-HEURÍSTICAS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 61,
+                "codigo": "INF0368",
+                "nome": "METODOLOGIA E EXPERIMENTAÇÃO EM ENGENHARIA DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 62,
+                "codigo": "INF0369",
+                "nome": "MICROCONTROLADORES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    15,
+                    2
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 63,
+                "codigo": "INF0371",
+                "nome": "RECUPERAÇÃO DE INFORMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    7,
+                    11
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 64,
+                "codigo": "INF0372",
+                "nome": "REDES NEURONAIS ARTIFICIAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    38
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 65,
+                "codigo": "INF0373",
+                "nome": "SISTEMAS MULTIAGENTES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    17
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 66,
+                "codigo": "INF0374",
+                "nome": "TÓPICOS AVANÇADOS EM REDES SEM FIO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    46
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 67,
+                "codigo": "INF0375",
+                "nome": "TÓPICOS EM COMPUTAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 68,
+                "codigo": "INF0376",
+                "nome": "TÓPICOS EM TESTE DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 69,
+                "codigo": "INF0377",
+                "nome": "VERIFICAÇÃO FORMAL DE PROGRAMAS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 70,
+                "codigo": "INF0378",
+                "nome": "VISÃO ROBÓTICA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    10,
+                    34
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 71,
+                "codigo": "INF0379",
+                "nome": "VISUALIZAÇÃO DE INFORMAÇÕES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    12
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 72,
+                "codigo": "INF0380",
+                "nome": "WEB SEMÂNTICA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    17
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            }
+        ]
+    }
+}

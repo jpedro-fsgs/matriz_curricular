@@ -10,8 +10,8 @@ export type DisciplinaJson = {
 
 export type MatrizJson = {
     nome_curso: string;
-    optativas: number;
-    nucleo_livre: number;
+    optativas_h: number;
+    nucleo_livre_h: number;
     disciplinas: {
         obrigatorias: DisciplinaJson[];
         optativas: DisciplinaJson[];
@@ -37,7 +37,7 @@ export type Disciplina = {
     preRequisitos: Disciplina[];
     requisitoPara: Disciplina[];
     disponivel: boolean;
-    ch: string;
+    ch: number;
     nucleo: string;
     natureza: string;
 };

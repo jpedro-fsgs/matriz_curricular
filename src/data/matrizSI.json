@@ -1,8 +1,8 @@
 {
     "nome_curso": "SISTEMAS DE INFORMAÇÃO - Goiânia - Presencial - N - BACHARELADO",
     "codigo": "SIINF-BN-2",
-    "optativas": 2,
-    "nucleo_livre": 2,
+    "optativas_h": 128,
+    "nucleo_livre_h": 128,
     "disciplinas": {
         "obrigatorias": [
             {

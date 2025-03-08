@@ -38,6 +38,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     >([]);
     const [curso, setCurso] = useState<string>("");
     const [cursoIndex, setCursoIndex] = useState<number>(0);
+    // const [chOptativas, setChOptativas] = useState<number>(0);
     const [completadasCount, setCompletadasCount] = useState<Completadas>({completadas: 0, total: 0});
     const [search, setSearch] = useState<string>("");
     const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
@@ -84,8 +85,6 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("cursoIndex", JSON.stringify(cursoIndex));
     }, [cursoIndex]);
 
-    useEffect(() => console.log(localStorage), [matriz, cursoIndex]);
-
     useEffect(() => {
         setFilterMatrizObrigatorias(() => {
             return matriz.filter((disciplina) => {
@@ -129,12 +128,13 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         const obrigatorias = matrizF.reduce((count, disciplina) => {
             return count + (disciplina.completada ? 1 : 0);
         }, 0);
-        const optativas = matriz.filter((disciplina) => disciplina.natureza === "OPTAT.").reduce((count, disciplina) => {
-            return count + (disciplina.completada ? 1 : 0);
-        }, 0);
+
+        // const optativas = matriz.filter((disciplina) => disciplina.natureza === "OPTAT.").reduce((count, disciplina) => {
+        //     return disciplina.completada ? count + 1 : count;
+        // }, 0);
         setCompletadasCount({
-            completadas: obrigatorias + (optativas > 2 ? 2 : optativas),
-            total: matrizF.length + 2,
+            completadas: obrigatorias,
+            total: matrizF.length,
         });
     }, [matriz]);
 
@@ -145,6 +145,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     ) {
         setCursoIndex(cursoNewIndex);
         setCurso(matrizJson.nome_curso);
+        // setChOptativas(matrizJson.optativas_h);
 
         const newMatriz: Disciplina[] = [
             ...matrizJson.disciplinas.obrigatorias,
@@ -162,7 +163,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 preRequisitos: [],
                 requisitoPara: [],
                 disponivel: false,
-                ch: disciplina.ch,
+                ch: parseInt(disciplina.ch.replace("h", "")), 
                 nucleo: disciplina.nucleo,
                 natureza: disciplina.natureza,
             }));
