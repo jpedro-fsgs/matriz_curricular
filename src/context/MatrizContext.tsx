@@ -2,103 +2,174 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
+    Completadas,
     Disciplina,
-    DisciplinaJson,
     EstadoDisciplina,
+    MatrizJson,
 } from "@/types/DisciplinaType";
-import { cursos } from "@/data/CursosData";
 import { normalizeText } from "@/utils/stringUtils";
+import { cursos } from "@/data/CursosData";
 
 type MatrizContextType = {
     curso: string;
     matriz: Disciplina[];
-    completadasCount: number;
-    filterMatriz: Disciplina[];
+    completadasCount: Completadas;
+    filterMatrizObrigatorias: Disciplina[];
+    filterMatrizOptativas: Disciplina[];
     setSearch: (search: string) => void;
     setFilterEstado: (estado: EstadoDisciplina) => void;
     definirMatriz: (
         cursoIndex: number,
-        matrizJson: DisciplinaJson[],
+        matrizJson: MatrizJson,
         storedData: number[]
     ) => void;
     toggleCompletada: (id: number) => void;
 };
 
-
-
 const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
 
 export function MatrizProvider({ children }: { children: React.ReactNode }) {
     const [matriz, setMatriz] = useState<Disciplina[]>([]);
-    const [filterMatriz, setFilterMatriz] = useState<Disciplina[]>([]);
+    const [filterMatrizObrigatorias, setFilterMatrizObrigatorias] = useState<
+        Disciplina[]
+    >([]);
+    const [filterMatrizOptativas, setFilterMatrizOptativas] = useState<
+        Disciplina[]
+    >([]);
     const [curso, setCurso] = useState<string>("");
     const [cursoIndex, setCursoIndex] = useState<number>(0);
-    const [completadasCount, setCompletadasCount] = useState(0);
+    // const [chOptativas, setChOptativas] = useState<number>(0);
+    const [completadasCount, setCompletadasCount] = useState<Completadas>({completadas: 0, total: 0});
     const [search, setSearch] = useState<string>("");
     const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
         null
     );
 
     useEffect(() => {
+        const storedIndex = localStorage.getItem("cursoIndex");
+
+        if (storedIndex !== null) {
+            const parsedIndex = JSON.parse(storedIndex);
+
+            const storedData = localStorage.getItem(`matriz-${parsedIndex}`);
+
+            if (storedData !== null) {
+                const parsedData = JSON.parse(storedData);
+                definirMatriz(
+                    parsedIndex,
+                    cursos[parsedIndex].matriz,
+                    parsedData
+                );
+                return;
+            }
+        }
+
+        definirMatriz(0, cursos[0].matriz, []);
+
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if (matriz.length === 0) return;
         const completadas = matriz
             .filter((disciplina) => disciplina.completada)
             .map((disciplina) => disciplina.id);
-        localStorage.setItem("matriz", JSON.stringify({ cursoIndex, completadas }));
+
+        localStorage.setItem(
+            `matriz-${cursoIndex}`,
+            JSON.stringify(completadas)
+        );
     }, [matriz, cursoIndex]);
 
     useEffect(() => {
-        console.log(normalizeText("Cálculo"));
-        setFilterMatriz(() => {
+        localStorage.setItem("cursoIndex", JSON.stringify(cursoIndex));
+    }, [cursoIndex]);
+
+    useEffect(() => {
+        setFilterMatrizObrigatorias(() => {
             return matriz.filter((disciplina) => {
                 const matchesSearch = search
-                    ? normalizeText(disciplina.nome).includes(normalizeText(search))
+                    ? normalizeText(disciplina.nome).includes(
+                          normalizeText(search)
+                      )
                     : true;
                 const matchesEstado = filterEstado
                     ? disciplina.estado === filterEstado
                     : true;
-                return matchesSearch && matchesEstado;
+                return (
+                    matchesSearch &&
+                    matchesEstado &&
+                    disciplina.natureza == "OBRIG."
+                );
+            });
+        });
+
+        setFilterMatrizOptativas(() => {
+            return matriz.filter((disciplina) => {
+                const matchesSearch = search
+                    ? normalizeText(disciplina.nome).includes(
+                          normalizeText(search)
+                      )
+                    : true;
+                const matchesEstado = filterEstado
+                    ? disciplina.estado === filterEstado
+                    : true;
+                return (
+                    matchesSearch &&
+                    matchesEstado &&
+                    disciplina.natureza == "OPTAT."
+                );
             });
         });
     }, [filterEstado, matriz, search]);
 
     useEffect(() => {
-        setCompletadasCount(
-            matriz.reduce((count, disciplina) => {
-                return count + (disciplina.completada ? 1 : 0);
-            }, 0)
-        );
+        const matrizF = matriz.filter((disciplina) => disciplina.natureza === "OBRIG.");
+        const obrigatorias = matrizF.reduce((count, disciplina) => {
+            return count + (disciplina.completada ? 1 : 0);
+        }, 0);
+
+        // const optativas = matriz.filter((disciplina) => disciplina.natureza === "OPTAT.").reduce((count, disciplina) => {
+        //     return disciplina.completada ? count + 1 : count;
+        // }, 0);
+        setCompletadasCount({
+            completadas: obrigatorias,
+            total: matrizF.length,
+        });
     }, [matriz]);
 
     function definirMatriz(
-        cursoIndex: number,
-        matrizJson: DisciplinaJson[],
+        cursoNewIndex: number,
+        matrizJson: MatrizJson,
         storedData: number[]
     ) {
-        setCursoIndex(cursoIndex)
-        setCurso(cursos[cursoIndex].nome);
+        setCursoIndex(cursoNewIndex);
+        setCurso(matrizJson.nome_curso);
+        // setChOptativas(matrizJson.optativas_h);
 
-        const newMatriz: Disciplina[] = matrizJson.map((disciplina) => ({
-            id: disciplina.id - 1,
-            nome: disciplina.nome,
-            completada: false,
-            estado: EstadoDisciplina.Bloqueada,
-            importancia: 0,
-            unidadeResponsavel: disciplina.unidade_responsavel,
-            preRequisitosId: disciplina.pre_requisitos.map((id) => id - 1),
-            preRequisitos: [],
-            requisitoPara: [],
-            disponivel: false,
-            chTeorica: disciplina.ch_teorica,
-            chPratica: disciplina.ch_pratica,
-            cht: disciplina.cht,
-            nucleo: disciplina.nucleo,
-            natureza: disciplina.natureza,
-        }));
+        const newMatriz: Disciplina[] = [
+            ...matrizJson.disciplinas.obrigatorias,
+            ...matrizJson.disciplinas.optativas,
+        ]
+            .sort((a, b) => a.id - b.id)
+            .map((disciplina) => ({
+                id: disciplina.id,
+                nome: disciplina.nome,
+                codigo: disciplina.codigo,
+                completada: false,
+                estado: EstadoDisciplina.Bloqueada,
+                importancia: 0,
+                preRequisitosId: disciplina.pre_requisitos,
+                preRequisitos: [],
+                requisitoPara: [],
+                disponivel: false,
+                ch: parseInt(disciplina.ch.replace("h", "")), 
+                nucleo: disciplina.nucleo,
+                natureza: disciplina.natureza,
+            }));
 
         if (storedData) {
-            storedData.forEach(
-                (id) => (newMatriz[id].completada = true)
-            );
+            storedData.forEach((id) => (newMatriz[id].completada = true));
         }
 
         atualizarRequisitos(newMatriz);
@@ -126,6 +197,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
             while (stack.length > 0) {
                 const current = stack.pop()!;
+                if(current.natureza == "OPTAT.") continue;
                 visited.add(current.id);
                 stack.push(...current.requisitoPara);
             }
@@ -183,7 +255,8 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 curso,
                 matriz,
                 completadasCount,
-                filterMatriz,
+                filterMatrizObrigatorias,
+                filterMatrizOptativas,
                 setSearch,
                 setFilterEstado,
                 definirMatriz,

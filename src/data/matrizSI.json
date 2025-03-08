@@ -1,442 +1,562 @@
-[
-    {
-        "id": 1,
-        "nome": "Cálculo 1A",
-        "unidade_responsavel": "IME",
-        "pre_requisitos": [],
-        "ch_teorica": 96,
-        "ch_pratica": 0,
-        "cht": 96,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 2,
-        "nome": "Computação e Sociedade",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 0,
-        "cht": 32,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 3,
-        "nome": "Introdução à Programação",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 48,
-        "ch_pratica": 80,
-        "cht": 128,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 4,
-        "nome": "Fundamentos de Matemática para Computação",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 5,
-        "nome": "Algoritmos e Estruturas de Dados 1",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [3],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 6,
-        "nome": "Introdução aos Sistemas de Informação",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 7,
-        "nome": "Lógica Matemática",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [4],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 8,
-        "nome": "Metodologia Científica",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 9,
-        "nome": "Probabilidade e Estatística A",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [1],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 10,
-        "nome": "Algoritmos e Estruturas de Dados 2",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [5],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 11,
-        "nome": "Arquitetura de Computadores",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [4],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 12,
-        "nome": "Banco de Dados",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [7],
-        "ch_teorica": 48,
-        "ch_pratica": 0,
-        "cht": 48,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 13,
-        "nome": "Engenharia de Sistemas de Informação 1",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [6],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 14,
-        "nome": "Programação Orientada a Objetos",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [3],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 15,
-        "nome": "Álgebra Linear",
-        "unidade_responsavel": "IME",
-        "pre_requisitos": [],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 16,
-        "nome": "Análise e Projeto de Algoritmos",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [4, 10],
-        "ch_teorica": 48,
-        "ch_pratica": 0,
-        "cht": 48,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 17,
-        "nome": "Banco de Dados 2",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [12],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 18,
-        "nome": "Engenharia de Software",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 19,
-        "nome": "Sistemas Operacionais",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [11],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 20,
-        "nome": "Engenharia de Requisitos",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 21,
-        "nome": "Sistemas Inteligentes de Apoio à Decisão",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [6],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 22,
-        "nome": "Introdução à Administração de Empresas",
-        "unidade_responsavel": "FACE",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 0,
-        "cht": 32,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 23,
-        "nome": "Pesquisa Operacional",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [15],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 24,
-        "nome": "Redes de Computadores",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 25,
-        "nome": "Gestão de Sistemas e de TI",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [22],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 26,
-        "nome": "Engenharia de Sistemas de Informação 2",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [13],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "OBR",
-        "natureza": "OBR"
-    },
-    {
-        "id": 27,
-        "nome": "Linguagens e Paradigmas de Programação",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [3],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 28,
-        "nome": "Projeto de Software",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [14, 18],
-        "ch_teorica": 64,
-        "ch_pratica": 0,
-        "cht": 64,
-        "nucleo": "NC",
-        "natureza": "OBR"
-    },
-    {
-        "id": 29,
-        "nome": "Sistemas Distribuídos",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [14, 19, 24],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NE",
-        "natureza": "OBR"
-    },
-    {
-        "id": 30,
-        "nome": "Governança Corporativa e de TI",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [22],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 31,
-        "nome": "Gerenciamento de Processos e Serviços em SI",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [22],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 32,
-        "nome": "Desenvolvimento Full Stack",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [29],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 33,
-        "nome": "Interação Humano-Computador",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [5, 9],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 34,
-        "nome": "Disciplina de Núcleo Livre",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 35,
-        "nome": "Gestão de Segurança da Informação",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [24],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 36,
-        "nome": "Empreendedorismo Digital",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [20, 22],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OBR"
-    },
-    {
-        "id": 37,
-        "nome": "Disciplina de Núcleo Livre",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OPT"
-    },
-    {
-        "id": 38,
-        "nome": "Optativa 1",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OPT"
-    },
-    {
-        "id": 39,
-        "nome": "Optativa 2",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [],
-        "ch_teorica": 32,
-        "ch_pratica": 32,
-        "cht": 64,
-        "nucleo": "NL",
-        "natureza": "OPT"
-    },
-    {
-        "id": 40,
-        "nome": "Residência Técnica em Sistemas de Informação",
-        "unidade_responsavel": "INF",
-        "pre_requisitos": [23, 26, 28, 30],
-        "ch_teorica": 0,
-        "ch_pratica": 320,
-        "cht": 320,
-        "nucleo": "NE",
-        "natureza": "OBR"
+{
+    "nome_curso": "SISTEMAS DE INFORMAÇÃO - Goiânia - Presencial - N - BACHARELADO",
+    "codigo": "SIINF-BN-2",
+    "optativas_h": 128,
+    "nucleo_livre_h": 128,
+    "disciplinas": {
+        "obrigatorias": [
+            {
+                "id": 0,
+                "codigo": "IME0350",
+                "nome": "CÁLCULO 1A",
+                "ch": "96h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 1,
+                "codigo": "INF0283",
+                "nome": "COMPUTAÇÃO E SOCIEDADE",
+                "ch": "32h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 2,
+                "codigo": "INF0284",
+                "nome": "INTRODUÇÃO À PROGRAMAÇÃO",
+                "ch": "128h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 3,
+                "codigo": "INF0285",
+                "nome": "FUNDAMENTOS DE MATEMÁTICA PARA COMPUTAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 4,
+                "codigo": "IME0378",
+                "nome": "PROBABILIDADE E ESTATÍSTICA A",
+                "ch": "64h",
+                "pre_requisitos": [
+                    0
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 5,
+                "codigo": "INF0286",
+                "nome": "ALGORITMOS E ESTRUTURAS DE DADOS 1",
+                "ch": "64h",
+                "pre_requisitos": [
+                    2
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 6,
+                "codigo": "INF0305",
+                "nome": "LÓGICA MATEMÁTICA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 7,
+                "codigo": "INF0307",
+                "nome": "METODOLOGIA CIENTÍFICA",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 8,
+                "codigo": "INF0353",
+                "nome": "INTRODUÇÃO AOS SISTEMAS DE INFORMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 9,
+                "codigo": "INF0015",
+                "nome": "ARQUITETURA DE COMPUTADORES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 10,
+                "codigo": "INF0022",
+                "nome": "BANCO DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    6
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 11,
+                "codigo": "INF0164",
+                "nome": "PROGRAMAÇÃO ORIENTADA A OBJETOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    2
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 12,
+                "codigo": "INF0287",
+                "nome": "ALGORITMOS E ESTRUTURAS DE DADOS 2",
+                "ch": "64h",
+                "pre_requisitos": [
+                    5
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 13,
+                "codigo": "INF0308",
+                "nome": "ENGENHARIA DE SISTEMAS DE INFORMAÇÃO 1",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 14,
+                "codigo": "IME0351",
+                "nome": "ÁLGEBRA LINEAR",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 15,
+                "codigo": "INF0013",
+                "nome": "ANÁLISE E PROJETO DE ALGORITMOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    3,
+                    12
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 16,
+                "codigo": "INF0056",
+                "nome": "ENGENHARIA DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 17,
+                "codigo": "INF0309",
+                "nome": "BANCO DE DADOS 2",
+                "ch": "64h",
+                "pre_requisitos": [
+                    10
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 18,
+                "codigo": "INF0310",
+                "nome": "SISTEMAS OPERACIONAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    9
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 19,
+                "codigo": "FAC0307",
+                "nome": "INTRODUÇÃO À ADMINISTRAÇÃO DE EMPRESAS",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 20,
+                "codigo": "INF0311",
+                "nome": "ENGENHARIA DE REQUISITOS",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 21,
+                "codigo": "INF0312",
+                "nome": "SISTEMAS INTELIGENTES DE APOIO À DECISÃO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 22,
+                "codigo": "INF0313",
+                "nome": "PESQUISA OPERACIONAL",
+                "ch": "64h",
+                "pre_requisitos": [
+                    14
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 23,
+                "codigo": "INF0314",
+                "nome": "REDES DE COMPUTADORES",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 24,
+                "codigo": "INF0288",
+                "nome": "LINGUAGENS E PARADIGMAS DE PROGRAMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    2
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 25,
+                "codigo": "INF0290",
+                "nome": "PROJETO DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11,
+                    16
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 26,
+                "codigo": "INF0315",
+                "nome": "GESTÃO DE SISTEMAS E DE TI",
+                "ch": "64h",
+                "pre_requisitos": [
+                    19
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 27,
+                "codigo": "INF0317",
+                "nome": "SISTEMAS DISTRIBUÍDOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11,
+                    18,
+                    23
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 28,
+                "codigo": "INF0323",
+                "nome": "ENGENHARIA DE SISTEMAS DE INFORMAÇÃO 2",
+                "ch": "64h",
+                "pre_requisitos": [
+                    13
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 33,
+                "codigo": "INF0289",
+                "nome": "INTERAÇÃO HUMANO-COMPUTADOR",
+                "ch": "64h",
+                "pre_requisitos": [
+                    5,
+                    4
+                ],
+                "nucleo": "NC",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 34,
+                "codigo": "INF0319",
+                "nome": "GERENCIAMENTO DE PROCESSOS E SERVIÇOS EM SI",
+                "ch": "64h",
+                "pre_requisitos": [
+                    19
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 35,
+                "codigo": "INF0324",
+                "nome": "GOVERNANÇA CORPORATIVA E DE TI",
+                "ch": "64h",
+                "pre_requisitos": [
+                    19
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 36,
+                "codigo": "INF0406",
+                "nome": "DESENVOLVIMENTO FULL STACK",
+                "ch": "64h",
+                "pre_requisitos": [
+                    27
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 50,
+                "codigo": "INF0327",
+                "nome": "EMPREENDEDORISMO DIGITAL",
+                "ch": "64h",
+                "pre_requisitos": [
+                    20,
+                    19
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 51,
+                "codigo": "INF0405",
+                "nome": "GESTÃO DE SEGURANÇA DA INFORMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    23
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            },
+            {
+                "id": 52,
+                "codigo": "INF0407",
+                "nome": "RESIDÊNCIA TÉCNICA EM SISTEMAS DE INFORMAÇÃO",
+                "ch": "320h",
+                "pre_requisitos": [
+                    22,
+                    28,
+                    25,
+                    35
+                ],
+                "nucleo": "NE-Obr",
+                "natureza": "OBRIG."
+            }
+        ],
+        "optativas": [
+            {
+                "id": 29,
+                "codigo": "INF0382",
+                "nome": "APLICAÇÕES DE SISTEMAS DE INFORMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 30,
+                "codigo": "INF0383",
+                "nome": "ARQUITETURA CORPORATIVA DE TI",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 31,
+                "codigo": "INF0386",
+                "nome": "TÓPICOS AVANÇADOS EM SISTEMAS DE INFORMAÇÃO 1",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 32,
+                "codigo": "INF0388",
+                "nome": "TÓPICOS AVANÇADOS EM SISTEMAS DE INFORMAÇÃO 2",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 37,
+                "codigo": "FAC0337",
+                "nome": "GESTÃO DE PESSOAS I",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 38,
+                "codigo": "FAC0342",
+                "nome": "LOGÍSTICA EMPRESARIAL",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 39,
+                "codigo": "FAC0435",
+                "nome": "FUNDAMENTOS DE CONTABILIDADE",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 40,
+                "codigo": "FAL0214",
+                "nome": "INTRODUÇÃO À LÍNGUA BRASILEIRA DE SINAIS",
+                "ch": "LIBRAS",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 41,
+                "codigo": "IME0209",
+                "nome": "MATEMÁTICA FINANCEIRA",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 42,
+                "codigo": "INF0303",
+                "nome": "TESTE DE SOFTWARE",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 43,
+                "codigo": "INF0355",
+                "nome": "ARMAZÉM DE DADOS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    17
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 44,
+                "codigo": "INF0366",
+                "nome": "JOGOS DIGITAIS",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 45,
+                "codigo": "INF0373",
+                "nome": "SISTEMAS MULTIAGENTES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 46,
+                "codigo": "INF0379",
+                "nome": "VISUALIZAÇÃO DE INFORMAÇÕES",
+                "ch": "64h",
+                "pre_requisitos": [
+                    12
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 47,
+                "codigo": "INF0380",
+                "nome": "WEB SEMÂNTICA",
+                "ch": "64h",
+                "pre_requisitos": [
+                    11
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 48,
+                "codigo": "INF0384",
+                "nome": "PROCESSO DE TOMADA DE DECISÃO EM CENÁRIOS COMPLEXOS",
+                "ch": "64h",
+                "pre_requisitos": [],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            },
+            {
+                "id": 49,
+                "codigo": "INF0387",
+                "nome": "SUSTENTAÇÃO DE SISTEMAS DE INFORMAÇÃO",
+                "ch": "64h",
+                "pre_requisitos": [
+                    8
+                ],
+                "nucleo": "NE-Opt",
+                "natureza": "OPTAT."
+            }
+        ]
     }
-]
+}
