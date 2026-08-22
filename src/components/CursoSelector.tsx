@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Select,
     SelectTrigger,
@@ -12,8 +14,7 @@ import { Button } from "./ui/button";
 import { useRef } from "react";
 import { XIcon } from "lucide-react";
 import { cursos } from "@/data/CursosData";
-
-
+import { ThemeToggle } from "./ThemeToggle";
 
 function CursoSelector() {
     const { definirMatriz, setSearch } = useMatriz();
@@ -24,7 +25,7 @@ function CursoSelector() {
         const cursoKeyIndex = Number(cursoKey);
         const storedData = localStorage.getItem(`matriz-${cursoKeyIndex}`);
         const completadas = storedData !== null ? JSON.parse(storedData) : [];
-        
+
         definirMatriz(cursoKeyIndex, cursos[cursoKeyIndex].matriz, completadas);
     }
 
@@ -35,10 +36,17 @@ function CursoSelector() {
     }
 
     return (
-        <div className="space-y-4 p-4 bg-secondary">
-            <div className="flex flex-col md:flex-row gap-4">
-                <Select onValueChange={handleSelect} defaultValue={typeof window !== "undefined" ? localStorage.getItem("cursoIndex") ?? "0" : "0"}>
-                    <SelectTrigger className="w-full md:w-64">
+        <header className="sticky top-0 z-20 w-full bg-secondary/95 backdrop-blur border-b border-border shadow-xs px-3 sm:px-6 py-3">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+                <Select
+                    onValueChange={handleSelect}
+                    defaultValue={
+                        typeof window !== "undefined"
+                            ? localStorage.getItem("cursoIndex") ?? "0"
+                            : "0"
+                    }
+                >
+                    <SelectTrigger className="w-full md:w-80 bg-background">
                         <SelectValue placeholder="Selecionar curso" />
                     </SelectTrigger>
                     <SelectContent>
@@ -49,21 +57,44 @@ function CursoSelector() {
                         ))}
                     </SelectContent>
                 </Select>
-                <div className="flex flex-1 gap-2">
-                    <Input
-                        placeholder="Buscar disciplina"
-                        onChange={(e) =>
-                            setSearch(e.target.value.trim().toLowerCase())
-                        }
-                        className="flex-1"
-                        ref={inputRef}
-                    />
-                    <Button variant="ghost" onClick={handleClearSearch}>
-                        <XIcon />
+
+                <div className="flex flex-1 items-center gap-2 max-w-2xl">
+                    <div className="relative flex-1">
+                        <Input
+                            placeholder="Buscar disciplina por nome..."
+                            onChange={(e) =>
+                                setSearch(e.target.value.trim().toLowerCase())
+                            }
+                            className="w-full pr-8 bg-background"
+                            ref={inputRef}
+                        />
+                        {inputRef.current?.value && (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground hover:text-foreground"
+                                onClick={handleClearSearch}
+                                aria-label="Limpar busca"
+                            >
+                                <XIcon className="h-4 w-4" />
+                            </Button>
+                        )}
+                    </div>
+
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleClearSearch}
+                        className="hidden sm:inline-flex text-muted-foreground hover:text-foreground"
+                        title="Limpar busca"
+                    >
+                        <XIcon className="h-4 w-4" />
                     </Button>
+
+                    <ThemeToggle />
                 </div>
             </div>
-        </div>
+        </header>
     );
 }
 

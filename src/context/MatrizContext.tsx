@@ -10,6 +10,8 @@ import {
 import { normalizeText } from "@/utils/stringUtils";
 import { cursos } from "@/data/CursosData";
 
+export type StoredDisciplinaData = number | { id: number; quebra?: boolean };
+
 type MatrizContextType = {
     curso: string;
     matriz: Disciplina[];
@@ -21,9 +23,10 @@ type MatrizContextType = {
     definirMatriz: (
         cursoIndex: number,
         matrizJson: MatrizJson,
-        storedData: number[]
+        storedData: StoredDisciplinaData[]
     ) => void;
     toggleCompletada: (id: number) => void;
+    forcarCompletada: (id: number) => void;
 };
 
 const MatrizContext = createContext<MatrizContextType | undefined>(undefined);
@@ -38,8 +41,10 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     >([]);
     const [curso, setCurso] = useState<string>("");
     const [cursoIndex, setCursoIndex] = useState<number>(0);
-    // const [chOptativas, setChOptativas] = useState<number>(0);
-    const [completadasCount, setCompletadasCount] = useState<Completadas>({completadas: 0, total: 0});
+    const [completadasCount, setCompletadasCount] = useState<Completadas>({
+        completadas: 0,
+        total: 0,
+    });
     const [search, setSearch] = useState<string>("");
     const [filterEstado, setFilterEstado] = useState<EstadoDisciplina | null>(
         null
@@ -65,7 +70,6 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         }
 
         definirMatriz(0, cursos[0].matriz, []);
-
         // eslint-disable-next-line
     }, []);
 
@@ -73,7 +77,10 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
         if (matriz.length === 0) return;
         const completadas = matriz
             .filter((disciplina) => disciplina.completada)
-            .map((disciplina) => disciplina.id);
+            .map((disciplina) => ({
+                id: disciplina.id,
+                quebra: disciplina.quebraRequisito,
+            }));
 
         localStorage.setItem(
             `matriz-${cursoIndex}`,
@@ -124,14 +131,13 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     }, [filterEstado, matriz, search]);
 
     useEffect(() => {
-        const matrizF = matriz.filter((disciplina) => disciplina.natureza === "OBRIG.");
+        const matrizF = matriz.filter(
+            (disciplina) => disciplina.natureza === "OBRIG."
+        );
         const obrigatorias = matrizF.reduce((count, disciplina) => {
             return count + (disciplina.completada ? 1 : 0);
         }, 0);
 
-        // const optativas = matriz.filter((disciplina) => disciplina.natureza === "OPTAT.").reduce((count, disciplina) => {
-        //     return disciplina.completada ? count + 1 : count;
-        // }, 0);
         setCompletadasCount({
             completadas: obrigatorias,
             total: matrizF.length,
@@ -141,11 +147,10 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
     function definirMatriz(
         cursoNewIndex: number,
         matrizJson: MatrizJson,
-        storedData: number[]
+        storedData: StoredDisciplinaData[]
     ) {
         setCursoIndex(cursoNewIndex);
         setCurso(matrizJson.nome_curso);
-        // setChOptativas(matrizJson.optativas_h);
 
         const newMatriz: Disciplina[] = [
             ...matrizJson.disciplinas.obrigatorias,
@@ -157,19 +162,31 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 nome: disciplina.nome,
                 codigo: disciplina.codigo,
                 completada: false,
+                quebraRequisito: false,
                 estado: EstadoDisciplina.Bloqueada,
                 importancia: 0,
                 preRequisitosId: disciplina.pre_requisitos,
                 preRequisitos: [],
                 requisitoPara: [],
                 disponivel: false,
-                ch: parseInt(disciplina.ch.replace("h", "")), 
+                ch: parseInt(disciplina.ch.replace("h", "")),
                 nucleo: disciplina.nucleo,
                 natureza: disciplina.natureza,
             }));
 
-        if (storedData) {
-            storedData.forEach((id) => (newMatriz[id].completada = true));
+        if (storedData && storedData.length > 0) {
+            storedData.forEach((item) => {
+                if (typeof item === "number") {
+                    if (newMatriz[item]) {
+                        newMatriz[item].completada = true;
+                    }
+                } else if (item && typeof item === "object" && typeof item.id === "number") {
+                    if (newMatriz[item.id]) {
+                        newMatriz[item.id].completada = true;
+                        newMatriz[item.id].quebraRequisito = Boolean(item.quebra);
+                    }
+                }
+            });
         }
 
         atualizarRequisitos(newMatriz);
@@ -180,8 +197,10 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
     function atualizarRequisitos(matriz: Disciplina[]) {
         matriz.forEach((disciplina) => {
-            disciplina.preRequisitos.length = 0;
-            disciplina.requisitoPara.length = 0;
+            disciplina.preRequisitos = [];
+            disciplina.requisitoPara = [];
+        });
+        matriz.forEach((disciplina) => {
             disciplina.preRequisitosId.forEach((id) => {
                 disciplina.preRequisitos.push(matriz[id]);
                 matriz[id].requisitoPara.push(disciplina);
@@ -197,7 +216,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
 
             while (stack.length > 0) {
                 const current = stack.pop()!;
-                if(current.natureza == "OPTAT.") continue;
+                if (current.natureza == "OPTAT.") continue;
                 visited.add(current.id);
                 stack.push(...current.requisitoPara);
             }
@@ -211,10 +230,13 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 (preRequisito) => preRequisito.completada
             );
             disciplina.disponivel = disponivel;
-            disciplina.estado = disciplina.disponivel
-                ? disciplina.completada
-                    ? EstadoDisciplina.Completada
-                    : EstadoDisciplina.Disponível
+            if (disciplina.completada && disciplina.disponivel && disciplina.quebraRequisito) {
+                disciplina.quebraRequisito = false;
+            }
+            disciplina.estado = disciplina.completada
+                ? EstadoDisciplina.Completada
+                : disciplina.disponivel
+                ? EstadoDisciplina.Disponível
                 : EstadoDisciplina.Bloqueada;
         });
     }
@@ -229,16 +251,50 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 ...disciplina,
             }));
             newMatriz[id].completada = !newMatriz[id].completada;
+            newMatriz[id].quebraRequisito = false;
 
             atualizarRequisitos(newMatriz);
 
-            //Seta todos as disciplinas dependentes como não completadas
+            // Seta todos as disciplinas dependentes como não completadas
             if (!newMatriz[id].completada) {
                 const queue = [...newMatriz[id].requisitoPara];
                 while (queue.length > 0) {
                     const current = queue.shift()!;
 
                     current.completada = false;
+                    current.quebraRequisito = false;
+                    queue.push(...current.requisitoPara);
+                }
+            }
+
+            calcularDisponibilidade(newMatriz);
+            calcularImportancia(newMatriz);
+            return newMatriz;
+        });
+    }
+
+    function forcarCompletada(id: number) {
+        setMatriz((matriz) => {
+            const newMatriz = matriz.map((disciplina: Disciplina) => ({
+                ...disciplina,
+            }));
+
+            newMatriz[id].completada = !newMatriz[id].completada;
+            if (newMatriz[id].completada) {
+                newMatriz[id].quebraRequisito = !newMatriz[id].disponivel;
+            } else {
+                newMatriz[id].quebraRequisito = false;
+            }
+
+            atualizarRequisitos(newMatriz);
+
+            // Se desmarcando, desmarcar dependentes em cascata
+            if (!newMatriz[id].completada) {
+                const queue = [...newMatriz[id].requisitoPara];
+                while (queue.length > 0) {
+                    const current = queue.shift()!;
+                    current.completada = false;
+                    current.quebraRequisito = false;
                     queue.push(...current.requisitoPara);
                 }
             }
@@ -261,6 +317,7 @@ export function MatrizProvider({ children }: { children: React.ReactNode }) {
                 setFilterEstado,
                 definirMatriz,
                 toggleCompletada,
+                forcarCompletada,
             }}
         >
             {children}

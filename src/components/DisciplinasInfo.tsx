@@ -1,3 +1,5 @@
+"use client";
+
 import { useMatriz } from "@/context/MatrizContext";
 import { EstadoDisciplina } from "@/types/DisciplinaType";
 import { useEffect, useState } from "react";
@@ -16,8 +18,8 @@ function DisciplinasInfo() {
             [...matriz]
                 .filter(
                     (disciplina) =>
-                        disciplina.estado == EstadoDisciplina.Disponível &&
-                        disciplina.natureza == "OBRIG."
+                        disciplina.estado === EstadoDisciplina.Disponível &&
+                        disciplina.natureza === "OBRIG."
                 )
                 .sort((a, b) => b.importancia - a.importancia)
         );
@@ -27,25 +29,28 @@ function DisciplinasInfo() {
         <div className="flex justify-center">
             <Popover>
                 <PopoverTrigger asChild>
-                    <Button variant="outline" className="mx-auto">
-                        <UnlockIcon className="w-4 h-4" />
-                        Disciplinas Disponíveis
-                        <ChevronDown className="w-4 h-4" />
+                    <Button variant="outline" className="mx-auto gap-2">
+                        <UnlockIcon className="w-4 h-4 text-muted-foreground" />
+                        <span>Disciplinas Disponíveis</span>
+                        <ChevronDown className="w-4 h-4 text-muted-foreground" />
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="p-2 space-y-2">
+                <PopoverContent className="w-80 p-3 space-y-2 max-h-80 overflow-y-auto">
                     {sortedMatriz.length > 0 ? (
                         <>
-                            <p className="text-right text-xs">Bloqueia</p>
+                            <div className="flex justify-between items-center pb-1 border-b text-xs text-muted-foreground">
+                                <span>Disciplina</span>
+                                <span>Bloqueia</span>
+                            </div>
                             {sortedMatriz.map((disciplina) => (
                                 <div
                                     key={disciplina.id}
-                                    className="flex justify-between text-sm"
+                                    className="flex justify-between items-center text-sm py-1 gap-2"
                                 >
-                                    <span>{disciplina.nome}</span>
+                                    <span className="truncate">{disciplina.nome}</span>
                                     {disciplina.importancia > 0 && (
                                         <Badge
-                                            className="w-8 h-5 mr-1 text-center flex items-center justify-center"
+                                            className="h-5 px-1.5 text-center flex items-center justify-center shrink-0"
                                             variant="destructive"
                                         >
                                             {disciplina.importancia}
@@ -55,7 +60,7 @@ function DisciplinasInfo() {
                             ))}
                         </>
                     ) : (
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-muted-foreground text-center py-2">
                             Nenhuma disciplina disponível.
                         </p>
                     )}

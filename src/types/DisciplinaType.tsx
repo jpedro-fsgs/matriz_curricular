@@ -31,6 +31,7 @@ export type Disciplina = {
     nome: string;
     codigo: string;
     completada: boolean;
+    quebraRequisito: boolean;
     estado: EstadoDisciplina;
     importancia: number;
     preRequisitosId: number[];

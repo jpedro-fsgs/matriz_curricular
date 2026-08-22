@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { MatrizProvider } from "@/context/MatrizContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "Matriz Curricular UFG",
@@ -13,11 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <MatrizProvider>
-          {children}
-        </MatrizProvider>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className="antialiased bg-background text-foreground min-h-screen">
+        <ThemeProvider>
+          <MatrizProvider>{children}</MatrizProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
